@@ -17,6 +17,7 @@ public class UserForm extends ActionForm{
 		this.phone = phone;
 		this.fullname = fullname;
 	}
+	
 	public UserForm() {
 	}
 	public int getId() {

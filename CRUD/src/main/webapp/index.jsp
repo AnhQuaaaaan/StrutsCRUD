@@ -25,7 +25,6 @@
         <tr>
             <th>ID</th>
             <th>Username</th>
-            <th>Password</th>
             <th>Email</th>
             <th>Phone</th>
             <th>Fullname</th>
@@ -37,12 +36,11 @@
                 <tr>
                     <td><bean:write name="user" property="id"/></td>
                     <td><bean:write name="user" property="username"/></td>
-                    <td><bean:write name="user" property="password"/></td>
                     <td><bean:write name="user" property="email"/></td>
                     <td><bean:write name="user" property="phone"/></td>
                     <td><bean:write name="user" property="fullname"/></td>
                     <td>
-    					<html:link page="/update-user.do" paramId="id" paramName="user" paramProperty="id" styleClass="btn-edit">Sửa</html:link>
+    					<html:link page="/showedit.do" paramId="id" paramName="user" paramProperty="id" styleClass="btn-edit">Sửa</html:link>
     					<html:link page="/delete-user.do" paramId="id" paramName="user" paramProperty="id" styleClass="btn-delete" onclick="return confirm('Bạn có chắc muốn xóa?');">Xóa</html:link>
     					<html:link page="/view-user.do" paramId="id" paramName="user" paramProperty="id" styleClass="btn-view">Xem</html:link>
 					</td>

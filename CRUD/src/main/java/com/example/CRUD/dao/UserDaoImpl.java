@@ -40,9 +40,28 @@ public class UserDaoImpl implements UserDao{
 		
 	}
 
-	public int updateUser(User user) {
-		return -1;
-		
+	public int updateUser(User user,int userId) {
+		int i=-1;
+		String sql="update user set email=?,phone=?,fullname=? where id=?";
+		try{
+			conn=DBConnect.getConnection();
+			stmt=conn.prepareStatement(sql);
+			stmt.setString(1,user.getEmail());
+			stmt.setString(2,user.getPhone());
+			stmt.setString(3,user.getFullname());
+			stmt.setInt(4, userId);
+			i=stmt.executeUpdate();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+	            if (stmt != null) stmt.close();
+	            if (conn != null) conn.close(); 
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+		}
+		return i;
 	}
 
 	public int deleteUser(int userId) {
@@ -69,13 +88,14 @@ public class UserDaoImpl implements UserDao{
 	}
 
 	public User getUserById(int userId) {
-		String sql="select * from user where id=?";
+		String sql="select id,username,email,phone,fullname from user where id=?";
 		try {
 			conn=DBConnect.getConnection();
 			stmt=conn.prepareStatement(sql);
 			stmt.setInt(1, userId);
 			rs=stmt.executeQuery();
-			return(new User(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6)));
+			rs.next();
+			return(new User(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5)));
 			
 		}
 		catch(Exception e) {
@@ -93,14 +113,14 @@ public class UserDaoImpl implements UserDao{
 	}
 
 	public List<User> getAllUsers() {
-		String sql="select * from user";
+		String sql="select id,username,email,phone,fullname from user";
 		List<User> list=new ArrayList<User>();
 		try {
 			conn=DBConnect.getConnection();
 			stmt=conn.prepareStatement(sql);
 			rs=stmt.executeQuery();
 			while(rs.next()) {
-				list.add(new User(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6)));
+				list.add(new User(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5)));
 			}
 		}
 		catch(Exception e) {

@@ -35,12 +35,29 @@ public class UserAction extends MappingDispatchAction{
 		return mapping.findForward("addUsersc");
 		
 	}
+	public ActionForward showEditUser(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		int userId=Integer.parseInt(request.getParameter("id"));
+		User user=userService.getUserById(userId);
+		if(user!=null) {
+			request.setAttribute("user", user);
+		}
+		else {
+			request.setAttribute("message",  "Something wrong, Cannot get User!");
+		}
+		return mapping.findForward("showedUser");
+		
+	}
 	public ActionForward updateUser(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
+		int userId=Integer.parseInt(request.getParameter("id"));
 		UserForm userForm=(UserForm) form;
-		User user = new User(userForm.getUsername(),userForm.getPassword(),userForm.getEmail(),userForm.getPhone(),userForm.getPassword());
-		if(userService.addUser(user)!=-1) request.setAttribute("message",  "Add new user successfully!");
-		else request.setAttribute("message",  "Something wrong, Cannot add new User!");
+		User user = new User();
+		user.setEmail(userForm.getEmail());
+		user.setPhone(userForm.getPhone());
+		user.setFullname(userForm.getFullname());
+		if(userService.updateUser(user, userId)!=-1) request.setAttribute("message",  "Update user successfully!");
+		else request.setAttribute("message",  "Something wrong, Cannot update User!");
 		return mapping.findForward("updateUsersc");
 		
 	}

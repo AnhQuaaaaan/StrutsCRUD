@@ -23,9 +23,9 @@ public class UserServiceImpl implements UserService{
 		}
 	}
 
-	public int updateUser(User user) {
+	public int updateUser(User user,int userId) {
         try {
-            return userDao.updateUser(user);
+            return userDao.updateUser(user,userId);
         } catch (Exception e) {
             e.printStackTrace();
             return -1;
